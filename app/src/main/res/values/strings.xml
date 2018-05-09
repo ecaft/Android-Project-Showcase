@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">android_project_showcase</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Showcase - MEng</string>
+    <string name="title_home">My List</string>
+    <string name="title_browse">Browse</string>
+    <string name="title_map">Map</string>
+    <string name="filter">Filter</string>
+    <string name="hello_browse_fragment">Browse fragment</string>
+    <string name="hello_map_fragment">Map Fragment</string>
+    <string name="hello_home_fragment">Home fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
