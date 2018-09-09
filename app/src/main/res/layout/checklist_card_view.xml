@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/checklist_card"
+    android:orientation="horizontal"
+    android:paddingLeft="35dp"
+    android:paddingRight="35dp">
+
+    <ImageButton
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_unchecked"
+        android:tint="#B31B1B"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check_text"
+        android:text="test"
+        android:textSize="23sp"
+        android:textColor="@color/black"
+        android:paddingTop="28.5dp"
+        android:paddingBottom="32.5dp"/>
+
+
+</LinearLayout>
