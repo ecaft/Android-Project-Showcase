@@ -37,7 +37,8 @@ import java.util.ArrayList;
  * Use the {@link BrowseFragment newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BrowseFragment extends Fragment implements FilterFragment.OnFragmentInteractionListener{
+public class BrowseFragment extends Fragment implements FilterFragment.OnFragmentInteractionListener,
+                                                        ProjectInfo.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -212,14 +213,24 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
     }
 
     private class ProjectHolder extends RecyclerView.ViewHolder{
-        //public LinearLayout relLayout;
+        public LinearLayout relLayout;
         public TextView name;
         public TextView description;
         public ImageButton star;
         public int index;
         public ProjectHolder(View v){
             super(v);
-            //relLayout = (LinearLayout) v.findViewById(R.id.project_card);
+            relLayout = (LinearLayout) v.findViewById(R.id.project_card);
+            relLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ProjectInfo info = new ProjectInfo();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(((ViewGroup)(getView().getParent())).getId(), info);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
             description = (TextView) v.findViewById(R.id.project_description);
             star = (ImageButton) v.findViewById(R.id.save_project);
             star.setOnClickListener(new View.OnClickListener() {

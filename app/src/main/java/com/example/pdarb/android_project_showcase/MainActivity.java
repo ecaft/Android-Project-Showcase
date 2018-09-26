@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         favorites = new DatabaseHelper(getApplicationContext()).getWritableDatabase();
 
         getSupportFragmentManager().beginTransaction().replace(R.id
-                .content_frame, new HomeFragment()).commit();
+                .content_frame, new BrowseFragment()).commit();
     }
 
     @Override
