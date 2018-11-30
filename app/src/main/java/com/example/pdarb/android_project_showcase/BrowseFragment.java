@@ -27,6 +27,7 @@ import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -60,6 +61,11 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
 
     private SearchView search;
 
+    static List<String> chosen;
+    static boolean[] prevMajorFilters = new boolean[FilterFragment.major.length];
+
+    int projectType = 0;
+
     public BrowseFragment() {
         // Required empty public constructor
     }
@@ -80,15 +86,6 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         View v = inflater.inflate(R.layout.fragment_browse, container, false);
         setHasOptionsMenu(true);
 
-        MultiStateToggleButton mstb = (MultiStateToggleButton) v.findViewById(R.id.mstb_multi_id);
-        mstb.setValue(0);
-        mstb.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
-            @Override
-            public void onValueChanged(int value) {
-                Log.d("MSTB", ""+value);
-            }
-        });
-
         projectRecyclerView = (RecyclerView) v.findViewById(R.id.project_recycler_view);
         projectRecyclerView.setHasFixedSize(true);
         projectLayoutManager = new LinearLayoutManager(getActivity());
@@ -105,6 +102,19 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         }
         projectAdapter = new ProjectAdapter(projects);
         projectRecyclerView.setAdapter(projectAdapter);
+
+
+        MultiStateToggleButton mstb = (MultiStateToggleButton) v.findViewById(R.id.mstb_multi_id);
+        mstb.setValue(projectType);
+        mstb.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                projectType = value;
+                projectAdapter.filter(value);
+                Log.d("MSTB", ""+value);
+            }
+        });
+
 
         getActivity().setTitle("Showcase - MEng");
 
@@ -291,6 +301,29 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             else {
                 for (ArrayList<String> a : names) {
                     if (a.get(0).contains(text)) {
+                        temp.add(a);
+                    }
+                }
+            }
+            names=temp;
+            notifyDataSetChanged();
+        }
+
+        public void filter(int type){
+            ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+            if(type==0){
+                temp=projects;
+            }
+            else if(type==1){
+                for (ArrayList<String> a : projects) {
+                    if (a.get(0).compareTo("test4")>=0) { //change condition to be if project is ugrad
+                        temp.add(a);
+                    }
+                }
+            }
+            else{
+                for (ArrayList<String> a : projects) {
+                    if (a.get(0).compareTo("test4")<0) { //change condition to be if project is grad
                         temp.add(a);
                     }
                 }

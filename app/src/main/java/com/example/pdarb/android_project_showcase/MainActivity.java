@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 DatabaseSchema.Favorites.Cols.VISITED + " = " + newChecked + " where " +
                 DatabaseSchema.Favorites.Cols.PROJECT_NAME + " = \"" + name + "\"";
         favorites.execSQL(query);
+
     }
 
     public static List<String> saved(){
