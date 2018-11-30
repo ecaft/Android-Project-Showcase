@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "29111550418",
-    "firebase_url": "https://project-showcase-sample.firebaseio.com",
-    "project_id": "project-showcase-sample",
-    "storage_bucket": "project-showcase-sample.appspot.com"
+    "project_number": "227322925568",
+    "firebase_url": "https://project-showcase-28cc7.firebaseio.com",
+    "project_id": "project-showcase-28cc7",
+    "storage_bucket": "project-showcase-28cc7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:29111550418:android:eb7ead9638499955",
+        "mobilesdk_app_id": "1:227322925568:android:eb7ead9638499955",
         "android_client_info": {
           "package_name": "com.example.pdarb.android_project_showcase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "29111550418-ug2quo7v8d9ub7gf53c7roqsc9q94srd.apps.googleusercontent.com",
+          "client_id": "227322925568-go064go85cagmkpcoupnm2ml4a7o0enm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pdarb.android_project_showcase",
+            "certificate_hash": "8ec5ee77cf6fa2113ab3d49a6367dd29d8412dd7"
+          }
+        },
+        {
+          "client_id": "227322925568-plei25rnbd8drsloabnggnsiqkg41r2l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC8aNQoROTqggnON5jOkVv4Ydeh14BvAuI"
+          "current_key": "AIzaSyD6pZ9Fq8tCUU1ZwO-0lsxUHerJgYobc0Q"
         }
       ],
       "services": {
@@ -29,8 +37,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227322925568-plei25rnbd8drsloabnggnsiqkg41r2l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "227322925568-2vtadi3dumhjdd63lhfv23rv45lv7u9t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ECAFT.project-showcase-ios"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2
