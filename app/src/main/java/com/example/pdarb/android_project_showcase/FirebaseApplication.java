@@ -2,6 +2,7 @@ package com.example.pdarb.android_project_showcase;
 
 import android.app.Application;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -24,37 +25,57 @@ public class FirebaseApplication extends Application {
     public static final String CONTACT_TEAM = "cteam";
     public static final String CONTACT_TYPE = "ctype";
 
-    private static DatabaseReference databaseReference;
+    private static DatabaseReference teamDatabaseReference;
     private static FirebaseStorage storage;
     private static StorageReference storageRef;
     private static ArrayList<FirebaseProject> projects;
-    private static ArrayList<FirebaseProject> contacts;
+    private static ArrayList<FirebaseContacts> contacts;
 
     public void onCreate() {
         super.onCreate();
         // Get database/storage reference and initialize everything
         projects = new ArrayList<>();
         contacts = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference()
+        teamDatabaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("teams");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        teamDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    try{
-                        FirebaseProject fc = snapshot.getValue(FirebaseProject
-                                .class);
-                        projects.add(fc);
-                    }
-                    catch(DatabaseException e){
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
+                projects.add(p);
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
+                for(int i=0; i<projects.size(); i++){
+                    if(projects.get(i).name==p.name) {
+                        projects.remove(i);
+                        i--;
                     }
+                }
+                projects.add(p);
+            }
 
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
+                for(int i=0; i<projects.size(); i++){
+                    if(projects.get(i).name==p.name) {
+                        projects.remove(i);
+                        i--;
+                    }
                 }
             }
 
             @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
@@ -68,7 +89,7 @@ public class FirebaseApplication extends Application {
     }
 
     public static DatabaseReference getFirebaseDatabase() {
-        return databaseReference;
+        return teamDatabaseReference;
     }
 
     public static StorageReference getStorageRef() {

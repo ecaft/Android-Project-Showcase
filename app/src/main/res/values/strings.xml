@@ -18,6 +18,9 @@
     <string name="contact1_email">Contact1 email address</string>
     <string name="contact2_email">Contact2 email address</string>
     <string name="contact3_email">Contact3 email address</string>
+    <string name="contact1_majorgradyear">Contact1 email address</string>
+    <string name="contact2_majorgradyear">Contact2 email address</string>
+    <string name="contact3_majorgradyear">Contact3 email address</string>
     <string name="project_details_note">Notes</string>
     <string name="project_details_editNote">Add a note for this project</string>
     <string-array name="browse_button">
