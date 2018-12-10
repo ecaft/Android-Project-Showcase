@@ -8,7 +8,6 @@ public class FirebaseProject {
     public String type;
     public String intro;
     public String majors;
-    public ArrayList<FirebaseContacts> members;
     public FirebaseProject() {}
 
     public FirebaseProject(String id, String description, String name, String type, String intro, String majors) {
@@ -58,4 +57,7 @@ public class FirebaseProject {
     public void setMajors(String majors) {
         this.majors = majors;
     }
+
+
+
 }

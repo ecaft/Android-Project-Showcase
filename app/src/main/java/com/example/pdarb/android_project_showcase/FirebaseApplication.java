@@ -13,6 +13,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FirebaseApplication extends Application {
     public static final String PROJECT_NAME = "pname";
@@ -25,23 +26,26 @@ public class FirebaseApplication extends Application {
     public static final String CONTACT_TEAM = "cteam";
     public static final String CONTACT_TYPE = "ctype";
 
-    private static DatabaseReference teamDatabaseReference;
+    private static DatabaseReference databaseReference;
     private static FirebaseStorage storage;
     private static StorageReference storageRef;
     private static ArrayList<FirebaseProject> projects;
-    private static ArrayList<FirebaseContacts> contacts;
+    private static HashMap<String, ArrayList<String>> members;
+    private static HashMap<String, FirebaseContacts> contacts;
+
 
     public void onCreate() {
         super.onCreate();
         // Get database/storage reference and initialize everything
         projects = new ArrayList<>();
-        contacts = new ArrayList<>();
-        teamDatabaseReference = FirebaseDatabase.getInstance().getReference()
+        members = new HashMap<String, ArrayList<String>>();
+        databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("teams");
-        teamDatabaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
+                members.put(p.name, new ArrayList<String>());
                 projects.add(p);
             }
 
@@ -51,7 +55,7 @@ public class FirebaseApplication extends Application {
                 for(int i=0; i<projects.size(); i++){
                     if(projects.get(i).name==p.name) {
                         projects.remove(i);
-                        i--;
+                        break;
                     }
                 }
                 projects.add(p);
@@ -63,7 +67,7 @@ public class FirebaseApplication extends Application {
                 for(int i=0; i<projects.size(); i++){
                     if(projects.get(i).name==p.name) {
                         projects.remove(i);
-                        i--;
+                        return;
                     }
                 }
             }
@@ -79,6 +83,48 @@ public class FirebaseApplication extends Application {
             }
         });
 
+        databaseReference = FirebaseDatabase.getInstance().getReference()
+                .child("contacts");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
+                members.get(c.team).add(c.name);
+                contacts.put(c.name, c);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
+                for(String p: members.keySet()){
+                    ArrayList contact = members.get(p);
+                    contact.remove(c.name);
+                    if(p.equals(c.team))
+                        contact.add(c.name);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
+                for(String p: members.keySet()){
+                    members.get(p).remove(c.name);
+                }
+                contacts.remove(c.name);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl
                 ("gs://project-showcase-28cc7.appspot.com");
@@ -89,10 +135,19 @@ public class FirebaseApplication extends Application {
     }
 
     public static DatabaseReference getFirebaseDatabase() {
-        return teamDatabaseReference;
+        return databaseReference;
     }
 
     public static StorageReference getStorageRef() {
         return storageRef;
+    }
+
+    public static ArrayList<FirebaseContacts> getContactsForProject(FirebaseProject p){
+        ArrayList<String> contact = members.get(p.name);
+        ArrayList<FirebaseContacts> c = new ArrayList<FirebaseContacts>();
+        for(String s: contact){
+            c.add(contacts.get(s));
+        }
+        return c;
     }
 }
