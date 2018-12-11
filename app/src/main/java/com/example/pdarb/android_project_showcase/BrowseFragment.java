@@ -27,6 +27,9 @@ import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -38,8 +41,7 @@ import java.util.List;
  * Use the {@link BrowseFragment newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BrowseFragment extends Fragment implements FilterFragment.OnFragmentInteractionListener,
-                                                        ProjectInfo.OnFragmentInteractionListener{
+public class BrowseFragment extends Fragment implements FilterFragment.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,7 +59,8 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
 
     private OnFragmentInteractionListener mListener;
 
-    private ArrayList<ArrayList<String>> projects;
+    //private ArrayList<ArrayList<String>> projects;
+    public static ArrayList<FirebaseProject> projects;
 
     private SearchView search;
 
@@ -91,16 +94,8 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         projectLayoutManager = new LinearLayoutManager(getActivity());
         projectRecyclerView.setLayoutManager(projectLayoutManager);
 
-        //temporary until we get the database
-        projects = new ArrayList<ArrayList<String>>();
-
-        for(int i=0; i<10; i++) {
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add("test" + i);
-            temp.add("description" + i);
-            projects.add(temp);
-        }
-        projectAdapter = new ProjectAdapter(projects);
+        projects = new ArrayList<>(FirebaseApplication.getProjects());
+        projectAdapter = new ProjectAdapter(new ArrayList<FirebaseProject>());
         projectRecyclerView.setAdapter(projectAdapter);
 
 
@@ -228,13 +223,23 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         public TextView description;
         public ImageButton star;
         public int index;
+        public FirebaseProject project;
+
         public ProjectHolder(View v){
             super(v);
             relLayout = (LinearLayout) v.findViewById(R.id.project_card);
             relLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ProjectInfo info = new ProjectInfo();
+                    InfoFragment info = new InfoFragment();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseApplication.PROJECT_NAME, project.teamName);
+                    bundle.putString(FirebaseApplication.PROJECT_TYPE, project.teamType);
+                    bundle.putString(FirebaseApplication.PROJECT_INFO, project.descrip);
+
+                    info.setArguments(bundle);
+
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(((ViewGroup)(getView().getParent())).getId(), info);
                     transaction.addToBackStack(null);
@@ -246,12 +251,13 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(MainActivity.isInFavorites(projects.get(index).get(0))){
-                        MainActivity.deleteRow(projects.get(index).get(0));
+                    String n = projects.get(index).teamName;
+                    if(MainActivity.isInFavorites(n)){
+                        MainActivity.deleteRow(n);
                         star.setImageResource(R.drawable.ic_fav_empty);
                     }
                     else{
-                        MainActivity.addRow(projects.get(index).get(0));
+                        MainActivity.addRow(n);
                         star.setImageResource(R.drawable.ic_fav);
                     }
                 }
@@ -261,9 +267,12 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
     }
 
     private class ProjectAdapter extends RecyclerView.Adapter<ProjectHolder>{
-        private ArrayList<ArrayList<String>> names;
-        public ProjectAdapter(ArrayList<ArrayList<String>> dataset){
-            names = dataset;
+        private ArrayList<FirebaseProject> names;
+        public ProjectAdapter(ArrayList<FirebaseProject> dataset){
+            names = FirebaseApplication.getProjects();
+            for(FirebaseProject f: names){
+                Log.d("firebase", ""+f.teamName+" "+f.descrip+" ");
+            }
         }
 
         @Override
@@ -276,11 +285,12 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
 
         @Override
         public void onBindViewHolder(ProjectHolder p, int position){
-            p.name.setText(names.get(position).get(0));
-            p.description.setText(names.get(position).get(1));
+            p.project = names.get(position);
+            p.name.setText(names.get(position).teamName);
+            p.description.setText(names.get(position).descrip);
             p.star.setBackgroundDrawable(null);
             p.index=position;
-            if(MainActivity.isInFavorites(projects.get(position).get(0))){
+            if(MainActivity.isInFavorites(projects.get(position).teamName)){
                 p.star.setImageResource(R.drawable.ic_fav);
             }
             else{
@@ -294,13 +304,13 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         }
 
         public void filter(String text){
-            ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
             if(text.equals("")){
                 temp=projects;
             }
             else {
-                for (ArrayList<String> a : names) {
-                    if (a.get(0).contains(text)) {
+                for (FirebaseProject a : names) {
+                    if (a.teamName.contains(text)) {
                         temp.add(a);
                     }
                 }
@@ -310,20 +320,20 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         }
 
         public void filter(int type){
-            ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
             if(type==0){
                 temp=projects;
             }
             else if(type==1){
-                for (ArrayList<String> a : projects) {
-                    if (a.get(0).compareTo("test4")>=0) { //change condition to be if project is ugrad
+                for (FirebaseProject a : projects) {
+                    if (a.teamType.equals("Undergrad Project Team")) { //change condition to be if project is ugrad
                         temp.add(a);
                     }
                 }
             }
             else{
-                for (ArrayList<String> a : projects) {
-                    if (a.get(0).compareTo("test4")<0) { //change condition to be if project is grad
+                for (FirebaseProject a : projects) {
+                    if (a.teamType.equals("M.Eng")) { //change condition to be if project is grad
                         temp.add(a);
                     }
                 }

@@ -88,12 +88,12 @@ public class InfoFragment extends Fragment {
         projname = args.getString(FirebaseApplication.PROJECT_NAME);
         desc = args.getString(FirebaseApplication.PROJECT_INFO);
         type = args.getString(FirebaseApplication.PROJECT_TYPE);
-        contactname = args.getString(FirebaseApplication.CONTACT_NAME);
-        email = args.getString(FirebaseApplication.CONTACT_EMAIL);
-        major = args.getString(FirebaseApplication.CONTACT_MAJOR);
-        gradyear = args.getString(FirebaseApplication.CONTACT_GRADYEAR);
-        contactteam = args.getString(FirebaseApplication.CONTACT_TEAM);
-        contactteamtype = args.getString(FirebaseApplication.CONTACT_TYPE);
+//        contactname = args.getString(FirebaseApplication.CONTACT_NAME);
+//        email = args.getString(FirebaseApplication.CONTACT_EMAIL);
+//        major = args.getString(FirebaseApplication.CONTACT_MAJOR);
+//        gradyear = args.getString(FirebaseApplication.CONTACT_GRADYEAR);
+//        contactteam = args.getString(FirebaseApplication.CONTACT_TEAM);
+//        contactteamtype = args.getString(FirebaseApplication.CONTACT_TYPE);
 
 
         if (desc==null||desc.isEmpty()){

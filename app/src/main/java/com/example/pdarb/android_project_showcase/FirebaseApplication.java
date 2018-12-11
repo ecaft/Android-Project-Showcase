@@ -1,6 +1,7 @@
 package com.example.pdarb.android_project_showcase;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,23 +38,30 @@ public class FirebaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // Get database/storage reference and initialize everything
+
+        Log.d("firebase", "entered Application onCreate");
+
         projects = new ArrayList<>();
         members = new HashMap<String, ArrayList<String>>();
+        contacts = new HashMap<String, FirebaseContacts>();
+
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("teams");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
-                members.put(p.name, new ArrayList<String>());
+                members.put(p.teamName, new ArrayList<String>());
                 projects.add(p);
+                Log.d("firebase", "adding children"+projects);
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
                 for(int i=0; i<projects.size(); i++){
-                    if(projects.get(i).name==p.name) {
+                    if(projects.get(i).teamName==p.teamName) {
                         projects.remove(i);
                         break;
                     }
@@ -65,7 +73,7 @@ public class FirebaseApplication extends Application {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
                 for(int i=0; i<projects.size(); i++){
-                    if(projects.get(i).name==p.name) {
+                    if(projects.get(i).teamName==p.teamName) {
                         projects.remove(i);
                         return;
                     }
@@ -88,9 +96,11 @@ public class FirebaseApplication extends Application {
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                 FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
-                members.get(c.team).add(c.name);
                 contacts.put(c.name, c);
+                Log.d("firebase", "adding contacts"+projects);
+
             }
 
             @Override
@@ -124,6 +134,13 @@ public class FirebaseApplication extends Application {
             }
         });
 
+        for(String s: contacts.keySet()){
+            FirebaseContacts c = contacts.get(s);
+            ArrayList<String> mems = members.get(c.team);
+            if(mems!=null) mems.add(s);
+        }
+
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl
@@ -143,7 +160,7 @@ public class FirebaseApplication extends Application {
     }
 
     public static ArrayList<FirebaseContacts> getContactsForProject(FirebaseProject p){
-        ArrayList<String> contact = members.get(p.name);
+        ArrayList<String> contact = members.get(p.teamName);
         ArrayList<FirebaseContacts> c = new ArrayList<FirebaseContacts>();
         for(String s: contact){
             c.add(contacts.get(s));

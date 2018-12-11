@@ -17,6 +17,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.database.*;
+import android.os.AsyncTask;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         favorites = new DatabaseHelper(getApplicationContext()).getWritableDatabase();
 
         getSupportFragmentManager().beginTransaction().replace(R.id
-                .content_frame, new BrowseFragment()).commit();
+                .content_frame, new HomeFragment()).commit();
     }
 
     @Override
@@ -202,5 +206,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onFragmentInteraction(Uri uri) {
         //
     }
+
 
 }
