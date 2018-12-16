@@ -1,6 +1,7 @@
 package com.example.pdarb.android_project_showcase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseProject {
     public String descrip;
@@ -56,6 +57,15 @@ public class FirebaseProject {
 
     public void setMajors(String majors) {
         this.majors = majors;
+    }
+
+    public List<String> getMajorList(){
+        ArrayList<String> m = new ArrayList<String>();
+        String[] arr = majors.split(",");
+        for(String s: arr){
+            m.add(s.trim());
+        }
+        return m;
     }
 
 

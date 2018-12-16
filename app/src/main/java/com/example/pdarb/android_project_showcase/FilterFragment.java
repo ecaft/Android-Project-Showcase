@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -63,14 +64,14 @@ public class FilterFragment extends Fragment {
             "Materials Science and Engineering",
             "Mechanical Engineering",
             "Operations Research and Information Engineering",
-            "Systems Engineering", ""};
+            "Systems Engineering"};
 
 
     private List<String> labels;
     private HashMap<String, List<String>> opts;
 
     static boolean[] majorFilters = BrowseFragment.prevMajorFilters;
-    static List<String> selected = new ArrayList<String>();
+    static List<String> selected;
 
 
     public FilterFragment() {
@@ -110,6 +111,32 @@ public class FilterFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.filter_menu, menu);
+        MenuItem submit = menu.findItem(R.id.submit);
+        submit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                selected = new ArrayList<String>();
+                if(!majorFilters[0]){
+                    for(int i=0; i<majorFilters.length; i++){
+                        if(majorFilters[i])
+                            selected.add(major[i]);
+                    }
+                }
+                BrowseFragment.prevMajorFilters = majorFilters;
+                BrowseFragment.chosen = selected;
+
+                getFragmentManager().popBackStack();
+                return true;
+            }
+        });
+        MenuItem cancel = menu.findItem(R.id.clear);
+        cancel.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                getFragmentManager().popBackStack();
+                return true;
+            }
+        });
     }
 
     @Override

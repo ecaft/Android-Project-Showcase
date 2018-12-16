@@ -28,4 +28,7 @@
         <item>Undergrad</item>
         <item>M. Eng</item>
     </string-array>
+
+    <string name="password_hint">Enter the code to use the app</string>
+    <string name="title_activity_fullscreen">Password Protection</string>
 </resources>

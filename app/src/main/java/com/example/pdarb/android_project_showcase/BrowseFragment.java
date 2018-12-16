@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -64,8 +65,9 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
 
     private SearchView search;
 
+    static int numMajors = 18;
     static List<String> chosen;
-    static boolean[] prevMajorFilters = new boolean[FilterFragment.major.length];
+    static boolean[] prevMajorFilters = new boolean[numMajors];
 
     int projectType = 0;
 
@@ -172,12 +174,12 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         return super.onOptionsItemSelected(item);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume(){
+        super.onResume();
+        chosen = FilterFragment.selected;
+        prevMajorFilters = FilterFragment.majorFilters;
+        projectAdapter.filter(prevMajorFilters[0], chosen);
     }
 
     @Override
@@ -270,8 +272,8 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         private ArrayList<FirebaseProject> names;
         public ProjectAdapter(ArrayList<FirebaseProject> dataset){
             names = FirebaseApplication.getProjects();
-            for(FirebaseProject f: names){
-                Log.d("firebase", ""+f.teamName+" "+f.descrip+" ");
+            for(FirebaseProject a: names){
+                Log.d("filter", "majors: "+a.getMajors());
             }
         }
 
@@ -304,18 +306,20 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         }
 
         public void filter(String text){
-            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
             if(text.equals("")){
-                temp=projects;
+                names = projects;
+                filter(projectType);
+                filter(prevMajorFilters[0], chosen);
             }
             else {
+                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
                 for (FirebaseProject a : names) {
-                    if (a.teamName.contains(text)) {
+                    if (a.teamName.toLowerCase().contains(text.toLowerCase())) {
                         temp.add(a);
                     }
                 }
+                names=temp;
             }
-            names=temp;
             notifyDataSetChanged();
         }
 
@@ -325,20 +329,41 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                 temp=projects;
             }
             else if(type==1){
-                for (FirebaseProject a : projects) {
+                for (FirebaseProject a : names) {
                     if (a.teamType.equals("Undergrad Project Team")) { //change condition to be if project is ugrad
                         temp.add(a);
                     }
                 }
             }
             else{
-                for (FirebaseProject a : projects) {
+                for (FirebaseProject a : names) {
                     if (a.teamType.equals("M.Eng")) { //change condition to be if project is grad
                         temp.add(a);
                     }
                 }
             }
             names=temp;
+            notifyDataSetChanged();
+        }
+
+        public void filter(boolean all, List<String> chosen){
+            if(all || chosen==null){
+                names = projects;
+                filter(projectType);
+            }
+            else {
+                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
+                for (FirebaseProject a : names) {
+                    List<String> majors = a.getMajorList();
+                    for (String m : majors) {
+                        if (chosen.contains(m)) {
+                            temp.add(a);
+                            break;
+                        }
+                    }
+                }
+                names = temp;
+            }
             notifyDataSetChanged();
         }
 
