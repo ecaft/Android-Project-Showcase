@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.GridView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.storage.StorageReference;
 
@@ -43,38 +46,22 @@ import android.graphics.drawable.Drawable;
 
 import android.support.v4.app.FragmentManager;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InfoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link InfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class InfoFragment extends Fragment {
 
     private TextView ProjectName;
     private TextView ProjectDesc;
     private TextView ContactsHeader;
-    private TextView Contact1Name;
-    private TextView Contact1MajorGradyear;
-    private TextView Contact1Email;
-    private TextView Contact2Name;
-    private TextView Contact2MajorGradyear;
-    private TextView Contact2Email;
-    private TextView Contact3Name;
-    private TextView Contact3MajorGradyear;
-    private TextView Contact3Email;
+    private static ArrayList<FirebaseContacts> contacts;
+    private static ArrayList<FirebaseProject> projects;
+    private static FirebaseProject current;
+    private RecyclerView contactsRecyclerView;
+    private ContactsAdapter contactsAdapter;
+    private RecyclerView.LayoutManager contactsLayoutManager;
 
     private String projname;
-    private String contactname;
-    private String email;
-    private String major;
-    private String gradyear;
     private String desc;
     private String type;
-    private String contactteam;
-    private String contactteamtype;
     private StorageReference storageRef = FirebaseApplication.getStorageRef();
     public InfoFragment() {
         // Required empty public constructor
@@ -88,17 +75,6 @@ public class InfoFragment extends Fragment {
         projname = args.getString(FirebaseApplication.PROJECT_NAME);
         desc = args.getString(FirebaseApplication.PROJECT_INFO);
         type = args.getString(FirebaseApplication.PROJECT_TYPE);
-//        contactname = args.getString(FirebaseApplication.CONTACT_NAME);
-//        email = args.getString(FirebaseApplication.CONTACT_EMAIL);
-//        major = args.getString(FirebaseApplication.CONTACT_MAJOR);
-//        gradyear = args.getString(FirebaseApplication.CONTACT_GRADYEAR);
-//        contactteam = args.getString(FirebaseApplication.CONTACT_TEAM);
-//        contactteamtype = args.getString(FirebaseApplication.CONTACT_TYPE);
-
-
-        if (desc==null||desc.isEmpty()){
-            desc = "Check the project's website to learn more.";
-        }
 
         ProjectName = (TextView) v.findViewById(R.id.project_details_name);
         ProjectName.setText(projname);
@@ -106,7 +82,68 @@ public class InfoFragment extends Fragment {
         ProjectDesc = (TextView) v.findViewById(R.id.project_details_information);
         ProjectDesc.setText(desc);
 
+        contactsRecyclerView = (RecyclerView) v.findViewById(R.id.rvContacts);
+        contactsRecyclerView.setHasFixedSize(true);
+        contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ArrayList<FirebaseContacts> test = new ArrayList<FirebaseContacts>();
+        test.add(new FirebaseContacts("a","b","c","d","e","f"));
+        test.add(new FirebaseContacts("1","2","3","4","5","6"));
+
+        contacts = FirebaseApplication.getContactsForProject(projname);
+        contactsAdapter = new ContactsAdapter(contacts);
+        contactsRecyclerView.setAdapter(contactsAdapter);
 
         return v;
+    }
+
+    public static ArrayList<FirebaseContacts> getContacts() {
+        return contacts;
+    }
+
+    public class ContactsHolder extends RecyclerView.ViewHolder {
+        public TextView nameTextView;
+        public TextView majorgradyearTextView;
+        public TextView emailTextView;
+
+        public ContactsHolder(View v) {
+            super(v);
+            nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
+            majorgradyearTextView = (TextView) itemView.findViewById(R.id.contact_majorgradyear);
+            emailTextView = (TextView) itemView.findViewById(R.id.contact_email);
+
+        }
+    }
+
+    public class ContactsAdapter extends RecyclerView.Adapter<ContactsHolder> {
+
+
+        public ArrayList<FirebaseContacts> mContacts;
+
+        public ContactsAdapter(ArrayList<FirebaseContacts> contacts) {
+            mContacts = contacts;
+        }
+
+        @Override
+        public ContactsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.contacts_view, parent, false);
+            ContactsHolder c = new ContactsHolder(v);
+            return c;
+        }
+
+        @Override
+        public void onBindViewHolder(ContactsHolder viewHolder, int position) {
+            FirebaseContacts contact = mContacts.get(position);
+
+            viewHolder.nameTextView.setText(contact.getName());
+            viewHolder.majorgradyearTextView.setText(contact.getMajor()+" "+contact.getGradyear());
+            viewHolder.emailTextView.setText(contact.getEmail());
+        }
+
+        @Override
+        public int getItemCount() {
+            return mContacts.size();
+        }
     }
 }

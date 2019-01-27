@@ -159,8 +159,8 @@ public class FirebaseApplication extends Application {
         return storageRef;
     }
 
-    public static ArrayList<FirebaseContacts> getContactsForProject(FirebaseProject p){
-        ArrayList<String> contact = members.get(p.teamName);
+    public static ArrayList<FirebaseContacts> getContactsForProject(String p){
+        ArrayList<String> contact = members.get(p);
         ArrayList<FirebaseContacts> c = new ArrayList<FirebaseContacts>();
         for(String s: contact){
             c.add(contacts.get(s));
