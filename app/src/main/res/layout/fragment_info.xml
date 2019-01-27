@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +18,7 @@
             android:id="@+id/project_details_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="75dp"
+            android:paddingLeft="5dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
             android:textSize="40sp"
@@ -36,126 +37,14 @@
             android:textSize="18sp"
             tools:text="Project Information"/>
 
-        <TextView
-            android:id="@+id/project_contacts_text"
-            android:layout_width="match_parent"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvContacts"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="40dp"
-            android:text="@string/project_contacts"
-            android:textColor="@color/tint"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:id="@+id/project_contact1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="Contact 1"/>
-
-        <TextView
-            android:id="@+id/contact1_majorgradyear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact1_majorgradyear"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/contact1_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact1_email"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/project_contact2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="Contact 2"/>
-
-        <TextView
-            android:id="@+id/contact2_majorgradyear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact2_majorgradyear"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/contact2_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact2_email"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/project_contact3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="Contact 3"/>
-
-        <TextView
-            android:id="@+id/contact3_majorgradyear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact3_majorgradyear"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/contact3_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="2dp"
-            android:text="@string/contact3_email"
-            android:textColor="@color/tint"
-            android:textSize="14sp"/>
-
+            android:paddingBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
-
-</ScrollView>
+</FrameLayout>
