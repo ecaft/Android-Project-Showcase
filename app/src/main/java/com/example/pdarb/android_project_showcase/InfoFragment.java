@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.content.Context;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -87,10 +88,15 @@ public class InfoFragment extends Fragment {
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ArrayList<FirebaseContacts> test = new ArrayList<FirebaseContacts>();
-        test.add(new FirebaseContacts("a","b","c","d","e","f"));
-        test.add(new FirebaseContacts("1","2","3","4","5","6"));
+        test.add(new FirebaseContacts("a","b","c","d","e","f","g"));
+        test.add(new FirebaseContacts("1","2","3","4","5","6","7"));
 
         contacts = FirebaseApplication.getContactsForProject(projname);
+        ArrayList<String> contactnames = new ArrayList<>();
+        for(int i = 0; i<contacts.size();i++) {
+            contactnames.add(contacts.get(i).email);
+        }
+        Log.d("contactsmap",""+contactnames);
         contactsAdapter = new ContactsAdapter(contacts);
         contactsRecyclerView.setAdapter(contactsAdapter);
 
@@ -137,7 +143,7 @@ public class InfoFragment extends Fragment {
             FirebaseContacts contact = mContacts.get(position);
 
             viewHolder.nameTextView.setText(contact.getName());
-            viewHolder.majorgradyearTextView.setText(contact.getMajor()+" "+contact.getGradyear());
+            viewHolder.majorgradyearTextView.setText(contact.getMajor()+" "+contact.getGradYear());
             viewHolder.emailTextView.setText(contact.getEmail());
         }
 

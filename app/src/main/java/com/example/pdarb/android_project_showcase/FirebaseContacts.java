@@ -1,30 +1,32 @@
 package com.example.pdarb.android_project_showcase;
 
 public class FirebaseContacts {
-    public String name;
+    public String contactName;
     public String email;
-    public String gradyear;
+    public String gradYear;
     public String major;
-    public String team;
-    public String type;
+    public String teamName;
+    public String teamType;
+    public String title;
 
     public FirebaseContacts() {}
 
-    public FirebaseContacts(String name, String email, String gradyear, String major, String team, String type) {
-        this.name = name;
+    public FirebaseContacts(String contactName, String email, String gradYear, String major, String teamName, String teamType, String title) {
+        this.contactName = contactName;
         this.email = email;
-        this.gradyear = gradyear;
+        this.gradYear = gradYear;
         this.major = major;
-        this.team = team;
-        this.type = type;
+        this.teamName = teamName;
+        this.teamType = teamType;
+        this.title = title;
     }
 
     public String getName() {
-        return name;
+        return contactName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.contactName = name;
     }
 
     public String getEmail() {
@@ -35,12 +37,12 @@ public class FirebaseContacts {
         this.email = email;
     }
 
-    public String getGradyear() {
-        return gradyear;
+    public String getGradYear() {
+        return gradYear;
     }
 
-    public void setGradyear(String gradyear) {
-        this.gradyear = gradyear;
+    public void setGradYear(String gradYear) {
+        this.gradYear = gradYear;
     }
 
     public String getMajor() {
@@ -51,19 +53,25 @@ public class FirebaseContacts {
         this.major = major;
     }
 
-    public String getTeam() {
-        return team;
-    }
+    public String getTeam() { return teamName; }
 
     public void setTeam(String team) {
-        this.team = team;
+        this.teamName = team;
     }
 
     public String getType() {
-        return type;
+        return teamType;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.teamType = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

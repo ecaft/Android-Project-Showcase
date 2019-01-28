@@ -32,7 +32,7 @@ public class FirebaseApplication extends Application {
     private static StorageReference storageRef;
     private static ArrayList<FirebaseProject> projects;
     private static HashMap<String, ArrayList<String>> members;
-    private static HashMap<String, FirebaseContacts> contacts;
+    private static HashMap<String, ArrayList<FirebaseContacts>> contacts;
 
 
     public void onCreate() {
@@ -43,7 +43,7 @@ public class FirebaseApplication extends Application {
 
         projects = new ArrayList<>();
         members = new HashMap<String, ArrayList<String>>();
-        contacts = new HashMap<String, FirebaseContacts>();
+        contacts = new HashMap<String, ArrayList<FirebaseContacts>>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("teams");
@@ -98,7 +98,12 @@ public class FirebaseApplication extends Application {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
-                contacts.put(c.name, c);
+                ArrayList<FirebaseContacts> list = contacts.get(c.teamName);
+                if(list == null) {
+                    list = new ArrayList<FirebaseContacts>();
+                }
+                list.add(c);
+                contacts.put(c.teamName,list);
                 Log.d("firebase", "adding contacts"+projects);
 
             }
@@ -106,21 +111,20 @@ public class FirebaseApplication extends Application {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
-                for(String p: members.keySet()){
-                    ArrayList contact = members.get(p);
-                    contact.remove(c.name);
-                    if(p.equals(c.team))
-                        contact.add(c.name);
+                for(String p: contacts.keySet()){
+                    ArrayList contact = contacts.get(p);
+                    contact.remove(c.contactName);
+                    if(p.equals(c.teamName))
+                        contact.add(c.contactName);
                 }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
-                for(String p: members.keySet()){
-                    members.get(p).remove(c.name);
+                for(String p: contacts.keySet()){
+                    contacts.get(p).remove(c.contactName);
                 }
-                contacts.remove(c.name);
             }
 
             @Override
@@ -134,11 +138,11 @@ public class FirebaseApplication extends Application {
             }
         });
 
-        for(String s: contacts.keySet()){
+        /*for(String s: contacts.keySet()){
             FirebaseContacts c = contacts.get(s);
-            ArrayList<String> mems = members.get(c.team);
+            ArrayList<String> mems = members.get(c.teamName);
             if(mems!=null) mems.add(s);
-        }
+        }*/
 
 
 
@@ -160,11 +164,6 @@ public class FirebaseApplication extends Application {
     }
 
     public static ArrayList<FirebaseContacts> getContactsForProject(String p){
-        ArrayList<String> contact = members.get(p);
-        ArrayList<FirebaseContacts> c = new ArrayList<FirebaseContacts>();
-        for(String s: contact){
-            c.add(contacts.get(s));
-        }
-        return c;
+        return contacts.get(p);
     }
 }
