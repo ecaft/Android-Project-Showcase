@@ -70,6 +70,8 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
     static boolean[] prevMajorFilters = new boolean[numMajors];
 
     int projectType = 0;
+    String searchFilter = "";
+
 
     public BrowseFragment() {
         // Required empty public constructor
@@ -107,7 +109,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             @Override
             public void onValueChanged(int value) {
                 projectType = value;
-                projectAdapter.filter(value);
+                projectAdapter.filter();
                 Log.d("MSTB", ""+value);
             }
         });
@@ -145,13 +147,15 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                projectAdapter.filter(query);
+                searchFilter = query;
+                projectAdapter.filter();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                projectAdapter.filter(newText);
+                searchFilter = newText;
+                projectAdapter.filter();
                 return false;
             }
         });
@@ -179,7 +183,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         super.onResume();
         chosen = FilterFragment.selected;
         prevMajorFilters = FilterFragment.majorFilters;
-        projectAdapter.filter(prevMajorFilters[0], chosen);
+        projectAdapter.filter();
     }
 
     @Override
@@ -305,67 +309,99 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             return names.size();
         }
 
-        public void filter(String text){
-            if(text.equals("")){
-                names = projects;
-                filter(projectType);
-                filter(prevMajorFilters[0], chosen);
-            }
-            else {
-                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
-                for (FirebaseProject a : names) {
-                    if (a.teamName.toLowerCase().contains(text.toLowerCase())) {
-                        temp.add(a);
-                    }
+        public void filter(){
+            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>(projects);
+            for(int i=0; i<temp.size(); i++){
+                FirebaseProject a = temp.get(i);
+                if((projectType==1 && a.teamType.equals("M.Eng"))
+                        ||(projectType==2 && a.teamType.equals("Undergrad Project Team"))){
+                    temp.remove(a);
+                    i--;
                 }
-                names=temp;
-            }
-            notifyDataSetChanged();
-        }
-
-        public void filter(int type){
-            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
-            if(type==0){
-                temp=projects;
-            }
-            else if(type==1){
-                for (FirebaseProject a : names) {
-                    if (a.teamType.equals("Undergrad Project Team")) { //change condition to be if project is ugrad
-                        temp.add(a);
-                    }
+                else if(!(searchFilter.equals("")
+                        ||a.teamName.toLowerCase().contains(searchFilter.toLowerCase()))){
+                    temp.remove(a);
+                    i--;
                 }
-            }
-            else{
-                for (FirebaseProject a : names) {
-                    if (a.teamType.equals("M.Eng")) { //change condition to be if project is grad
-                        temp.add(a);
-                    }
-                }
-            }
-            names=temp;
-            notifyDataSetChanged();
-        }
-
-        public void filter(boolean all, List<String> chosen){
-            if(all || chosen==null){
-                names = projects;
-                filter(projectType);
-            }
-            else {
-                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
-                for (FirebaseProject a : names) {
-                    List<String> majors = a.getMajorList();
-                    for (String m : majors) {
-                        if (chosen.contains(m)) {
-                            temp.add(a);
+                else if(!prevMajorFilters[0] && chosen!=null){
+                    boolean remove = true;
+                    for(String m: a.getMajorList()){
+                        if(chosen.contains(m)){
+                            remove = false;
                             break;
                         }
                     }
+                    if(remove){
+                        temp.remove(a);
+                        i--;
+                    }
                 }
-                names = temp;
             }
+            names = temp;
             notifyDataSetChanged();
         }
+
+//        public void filter(String text){
+//            if(text.equals("")){
+//                names = projects;
+//                filter(projectType);
+//                filter(prevMajorFilters[0], chosen);
+//            }
+//            else {
+//                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
+//                for (FirebaseProject a : names) {
+//                    if (a.teamName.toLowerCase().contains(text.toLowerCase())) {
+//                        temp.add(a);
+//                    }
+//                }
+//                names=temp;
+//            }
+//            notifyDataSetChanged();
+//        }
+//
+//        public void filter(int type){
+//            ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
+//            if(type==0){
+//                temp=projects;
+//            }
+//            else if(type==1){
+//                for (FirebaseProject a : projects) {
+//                    if (a.teamType.equals("Undergrad Project Team")) {
+//                        temp.add(a);
+//                    }
+//                }
+//            }
+//            else{
+//                for (FirebaseProject a : projects) {
+//                    if (a.teamType.equals("M.Eng")) {
+//                        temp.add(a);
+//                    }
+//                }
+//            }
+//            names=temp;
+//            notifyDataSetChanged();
+//        }
+//
+//        public void filter(boolean all, List<String> chosen){
+//            if(all || chosen==null){
+//                names = projects;
+//                filter(projectType);
+//            }
+//            else {
+//                ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>();
+//                for (FirebaseProject a : names) {
+//                    List<String> majors = a.getMajorList();
+//                    for (String m : majors) {
+//                        if (chosen.contains(m)) {
+//                            temp.add(a);
+//                            break;
+//                        }
+//                    }
+//                }
+//                names = temp;
+//            }
+//            notifyDataSetChanged();
+//        }
 
     }
 
