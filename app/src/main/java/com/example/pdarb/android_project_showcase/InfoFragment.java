@@ -111,13 +111,14 @@ public class InfoFragment extends Fragment {
         public TextView nameTextView;
         public TextView majorgradyearTextView;
         public TextView emailTextView;
+        public TextView titleTextView;
 
         public ContactsHolder(View v) {
             super(v);
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
             majorgradyearTextView = (TextView) itemView.findViewById(R.id.contact_majorgradyear);
             emailTextView = (TextView) itemView.findViewById(R.id.contact_email);
-
+            titleTextView = (TextView) itemView.findViewById(R.id.contact_title);
         }
     }
 
@@ -145,6 +146,7 @@ public class InfoFragment extends Fragment {
             viewHolder.nameTextView.setText(contact.getName());
             viewHolder.majorgradyearTextView.setText(contact.getMajor()+" "+contact.getGradYear());
             viewHolder.emailTextView.setText(contact.getEmail());
+            viewHolder.titleTextView.setText(contact.getTitle());
         }
 
         @Override
