@@ -26,6 +26,17 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/contact_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_gray"
+        android:paddingBottom="2dp"
+        android:paddingLeft="25dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/tint"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/contact_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
