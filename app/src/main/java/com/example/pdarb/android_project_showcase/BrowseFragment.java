@@ -166,7 +166,6 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     /*    int id = item.getItemId();
-
         if (id == R.id.filter) {
             Log.d("toolbar","filter");
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -243,6 +242,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                     bundle.putString(FirebaseApplication.PROJECT_NAME, project.teamName);
                     bundle.putString(FirebaseApplication.PROJECT_TYPE, project.teamType);
                     bundle.putString(FirebaseApplication.PROJECT_INFO, project.descrip);
+                    bundle.putString(FirebaseApplication.PROJECT_RESUME, project.resumeBook);
 
                     info.setArguments(bundle);
 

@@ -20,12 +20,7 @@ public class FirebaseApplication extends Application {
     public static final String PROJECT_NAME = "pname";
     public static final String PROJECT_INFO = "description";
     public static final String PROJECT_TYPE = "type";
-    public static final String CONTACT_NAME = "cname";
-    public static final String CONTACT_EMAIL = "email";
-    public static final String CONTACT_MAJOR = "major";
-    public static final String CONTACT_GRADYEAR = "gradyear";
-    public static final String CONTACT_TEAM = "cteam";
-    public static final String CONTACT_TYPE = "ctype";
+    public static final String PROJECT_RESUME = "resume";
 
     private static DatabaseReference databaseReference;
     private static FirebaseStorage storage;
