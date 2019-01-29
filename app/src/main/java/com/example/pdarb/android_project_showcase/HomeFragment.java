@@ -142,29 +142,48 @@ public class HomeFragment extends Fragment {
     private class ChecklistHolder extends RecyclerView.ViewHolder{
         public LinearLayout relLayout;
         public TextView name;
-        public ImageButton checkBox;
+        //public ImageButton checkBox;
         public int index;
+        public FirebaseProject project;
         public ChecklistHolder(View v){
             super(v);
             //relLayout = (LinearLayout) v.findViewById(R.id.project_card);
             name = (TextView) v.findViewById(R.id.check_text);
-            checkBox = (ImageButton) v.findViewById(R.id.check);
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String pName = MainActivity.saved().get(index);
-                    if(MainActivity.isChecked(pName)){
-                        MainActivity.changeChecked(pName, 0);
-                        checkBox.setImageResource(R.drawable.ic_unchecked);
-                        name.setTextColor(0xFF222222);
+            name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view){
+                        InfoFragment info = new InfoFragment();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseApplication.PROJECT_NAME, project.teamName);
+                        bundle.putString(FirebaseApplication.PROJECT_TYPE, project.teamType);
+                        bundle.putString(FirebaseApplication.PROJECT_INFO, project.descrip);
+
+                        info.setArguments(bundle);
+
+                        android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(((ViewGroup)(getView().getParent())).getId(), info);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
-                    else{
-                        MainActivity.changeChecked(pName, 1);
-                        checkBox.setImageResource(R.drawable.ic_checked);
-                        name.setTextColor(0x80222222);
-                    }
-                }
-            });
+                });
+//            checkBox = (ImageButton) v.findViewById(R.id.check);
+//            checkBox.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    String pName = MainActivity.saved().get(index);
+//                    if(MainActivity.isChecked(pName)){
+//                        MainActivity.changeChecked(pName, 0);
+//                        checkBox.setImageResource(R.drawable.ic_unchecked);
+//                        name.setTextColor(0xFF222222);
+//                    }
+//                    else{
+//                        MainActivity.changeChecked(pName, 1);
+//                        checkBox.setImageResource(R.drawable.ic_checked);
+//                        name.setTextColor(0x80222222);
+//                    }
+//                }
+//            });
         }
     }
 
@@ -187,13 +206,14 @@ public class HomeFragment extends Fragment {
             String pName = names.get(position);
             p.name.setText(pName);
             p.index=position;
-            p.checkBox.setBackgroundDrawable(null);
-            if(MainActivity.isChecked(pName)){
-                p.checkBox.setImageResource(R.drawable.ic_checked);
-            }
-            else{
-                p.checkBox.setImageResource(R.drawable.ic_unchecked);
-            }
+            p.project = FirebaseApplication.getProjectFromName(pName);
+//            p.checkBox.setBackgroundDrawable(null);
+//            if(MainActivity.isChecked(pName)){
+//                p.checkBox.setImageResource(R.drawable.ic_checked);
+//            }
+//            else{
+//                p.checkBox.setImageResource(R.drawable.ic_unchecked);
+//            }
         }
 
         @Override

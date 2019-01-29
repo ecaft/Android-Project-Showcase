@@ -296,7 +296,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             p.description.setText(names.get(position).descrip);
             p.star.setBackgroundDrawable(null);
             p.index=position;
-            if(MainActivity.isInFavorites(projects.get(position).teamName)){
+            if(MainActivity.isInFavorites(names.get(position).teamName)){
                 p.star.setImageResource(R.drawable.ic_fav);
             }
             else{
@@ -323,7 +323,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                     temp.remove(a);
                     i--;
                 }
-                else if(!prevMajorFilters[0] && chosen!=null){
+                else if(!prevMajorFilters[0] && chosen!=null && chosen.size()!=0){
                     boolean remove = true;
                     for(String m: a.getMajorList()){
                         if(chosen.contains(m)){

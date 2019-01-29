@@ -166,4 +166,15 @@ public class FirebaseApplication extends Application {
     public static ArrayList<FirebaseContacts> getContactsForProject(String p){
         return contacts.get(p);
     }
+
+    public static FirebaseProject getProjectFromName(String name){
+        FirebaseProject proj = null;
+        for(FirebaseProject p: projects){
+            if(p.teamName.equals(name)){
+                proj = p;
+                break;
+            }
+        }
+        return proj;
+    }
 }
