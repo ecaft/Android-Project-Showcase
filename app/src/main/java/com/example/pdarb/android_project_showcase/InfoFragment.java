@@ -1,58 +1,31 @@
 package com.example.pdarb.android_project_showcase;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-import android.widget.GridView;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageButton;
 
 import com.google.firebase.storage.StorageReference;
 
-import android.content.Intent;
-import android.provider.MediaStore;
-import android.content.Context;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.io.File;
-import android.graphics.drawable.Drawable;
-
-import android.support.v4.app.FragmentManager;
-
 
 public class InfoFragment extends Fragment {
 
     private TextView ProjectName;
     private TextView ProjectDesc;
     private TextView ContactsHeader;
+    //private ImageButton star;
     private static ArrayList<FirebaseContacts> contacts;
     private static ArrayList<FirebaseProject> projects;
     private static FirebaseProject current;
@@ -63,7 +36,7 @@ public class InfoFragment extends Fragment {
     private String projname;
     private String desc;
     private String type;
-    private StorageReference storageRef = FirebaseApplication.getStorageRef();
+    private String resumelink;
     public InfoFragment() {
         // Required empty public constructor
     }
@@ -76,6 +49,8 @@ public class InfoFragment extends Fragment {
         projname = args.getString(FirebaseApplication.PROJECT_NAME);
         desc = args.getString(FirebaseApplication.PROJECT_INFO);
         type = args.getString(FirebaseApplication.PROJECT_TYPE);
+        resumelink = args.getString(FirebaseApplication.PROJECT_RESUME);
+        setHasOptionsMenu(true);
 
         ProjectName = (TextView) v.findViewById(R.id.project_details_name);
         ProjectName.setText(projname);
@@ -87,10 +62,6 @@ public class InfoFragment extends Fragment {
         contactsRecyclerView.setHasFixedSize(true);
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ArrayList<FirebaseContacts> test = new ArrayList<FirebaseContacts>();
-        test.add(new FirebaseContacts("a","b","c","d","e","f","g"));
-        test.add(new FirebaseContacts("1","2","3","4","5","6","7"));
-
         contacts = FirebaseApplication.getContactsForProject(projname);
         ArrayList<String> contactnames = new ArrayList<>();
         for(int i = 0; i<contacts.size();i++) {
@@ -101,6 +72,38 @@ public class InfoFragment extends Fragment {
         contactsRecyclerView.setAdapter(contactsAdapter);
 
         return v;
+    }
+
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.info_menu, menu);
+        final MenuItem favoriteItem = menu.findItem(R.id.favorite);
+        favoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem){
+                String n = projname;
+                if(MainActivity.isInFavorites(n)){
+                    MainActivity.deleteRow(n);
+                    favoriteItem.setIcon(R.drawable.ic_fav_empty);
+                }
+                else{
+                    MainActivity.addRow(n);
+                    favoriteItem.setIcon(R.drawable.ic_fav);
+                }
+                return true;
+            }
+        });
+    }
+
+    public void startWebView (View view) {
+        Resume res = new Resume();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("link", resumelink);
+
+        Intent i = new Intent(getActivity(),Resume.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     public static ArrayList<FirebaseContacts> getContacts() {
