@@ -7,6 +7,7 @@
     <string name="submit">Submit</string>
     <string name="clear">Clear</string>
     <string name="no_link">Sorry. This resume book is unavailable.</string>
+    <string name="no_favs">Star some projects to see them here!</string>
     <string name="hello_browse_fragment">Browse fragment</string>
     <string name="hello_map_fragment">Map Fragment</string>
     <string name="hello_home_fragment">Home fragment</string>

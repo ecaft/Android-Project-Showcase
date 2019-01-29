@@ -48,6 +48,9 @@ public class MapFragment extends Fragment {
 
         map = (SubsamplingScaleImageView) v.findViewById(R.id.map);
         map.setImage(ImageSource.resource(R.drawable.fall_map));
+
+        getActivity().setTitle("Map");
+
         return v;
     }
 

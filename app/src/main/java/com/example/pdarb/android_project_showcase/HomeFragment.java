@@ -38,8 +38,6 @@ public class HomeFragment extends Fragment {
     private LinearLayoutManager checklistLayoutManager;
     private DividerItemDecoration divider;
 
-    private boolean[] checked;
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -80,6 +78,8 @@ public class HomeFragment extends Fragment {
 
         getActivity().setTitle("Want to Visit");
 
+        TextView no_favs = (TextView) v.findViewById(R.id.no_favs);
+
         checklistRecyclerView = (RecyclerView) v.findViewById(R.id.checklist_recycler_view);
         checklistRecyclerView.setHasFixedSize(true);
         checklistLayoutManager = new LinearLayoutManager(getActivity());
@@ -87,15 +87,14 @@ public class HomeFragment extends Fragment {
         divider = new DividerItemDecoration(checklistRecyclerView.getContext(), 0);
         divider.setDrawable(getResources().getDrawable(R.drawable.checklist_background));
 
-        String[] checklist = new String[3];
-        checked = new boolean[3];
-        for(int i=0; i<checklist.length; i++){
-            checklist[i] = "test "+i;
-            checked[i]=false;
+        if(MainActivity.saved().size()==0){
+            checklistRecyclerView.setVisibility(View.GONE);
+            no_favs.setVisibility(View.VISIBLE);
         }
-
-        checklistAdapter = new ChecklistAdapter(MainActivity.saved());
-        checklistRecyclerView.setAdapter(checklistAdapter);
+        else{
+            checklistAdapter = new ChecklistAdapter(MainActivity.saved());
+            checklistRecyclerView.setAdapter(checklistAdapter);
+        }
 
         return v;
     }

@@ -115,7 +115,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         });
 
 
-        getActivity().setTitle("Showcase - MEng");
+        getActivity().setTitle("Browse Projects");
 
         // Inflate the layout for this fragment
         return v;
