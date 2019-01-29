@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageButton;
+import android.widget.Button;
 
 import com.google.firebase.storage.StorageReference;
 
@@ -37,6 +38,9 @@ public class InfoFragment extends Fragment {
     private String desc;
     private String type;
     private String resumelink;
+
+    private Button resume;
+
     public InfoFragment() {
         // Required empty public constructor
     }
@@ -58,6 +62,22 @@ public class InfoFragment extends Fragment {
         ProjectDesc = (TextView) v.findViewById(R.id.project_details_information);
         ProjectDesc.setText(desc);
 
+        resume = (Button) v.findViewById(R.id.resume);
+        resume.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Resume res = new Resume();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("link", resumelink);
+
+                Intent i = new Intent(getActivity(),Resume.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+
         contactsRecyclerView = (RecyclerView) v.findViewById(R.id.rvContacts);
         contactsRecyclerView.setHasFixedSize(true);
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -71,12 +91,19 @@ public class InfoFragment extends Fragment {
         contactsAdapter = new ContactsAdapter(contacts);
         contactsRecyclerView.setAdapter(contactsAdapter);
 
+
         return v;
     }
 
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.info_menu, menu);
         final MenuItem favoriteItem = menu.findItem(R.id.favorite);
+        if(MainActivity.isInFavorites(projname)){
+            favoriteItem.setIcon(R.drawable.ic_fav);
+        }
+        else{
+            favoriteItem.setIcon(R.drawable.ic_fav_empty);
+        }
         favoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
             @Override
@@ -93,17 +120,6 @@ public class InfoFragment extends Fragment {
                 return true;
             }
         });
-    }
-
-    public void startWebView (View view) {
-        Resume res = new Resume();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("link", resumelink);
-
-        Intent i = new Intent(getActivity(),Resume.class);
-        i.putExtras(bundle);
-        startActivity(i);
     }
 
     public static ArrayList<FirebaseContacts> getContacts() {

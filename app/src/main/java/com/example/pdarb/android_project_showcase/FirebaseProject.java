@@ -9,14 +9,16 @@ public class FirebaseProject {
     public String teamType;
     public String intro;
     public String majors;
+    public String resumeBook;
     public FirebaseProject() {}
 
-    public FirebaseProject(String descrip, String intro, String majors, String teamName, String teamType) {
+    public FirebaseProject(String descrip, String intro, String majors, String resumeBook, String teamName, String teamType) {
         this.descrip = descrip;
         this.teamName = teamName;
         this.teamType = teamType;
         this.intro = intro;
         this.majors = majors;
+        this.resumeBook = resumeBook;
     }
 
     public String getDescription() {
@@ -57,6 +59,14 @@ public class FirebaseProject {
 
     public void setMajors(String majors) {
         this.majors = majors;
+    }
+
+    public String getResumeBook() {
+        return resumeBook;
+    }
+
+    public void setResumeBook(String resumeBook) {
+        this.resumeBook = resumeBook;
     }
 
     public List<String> getMajorList(){

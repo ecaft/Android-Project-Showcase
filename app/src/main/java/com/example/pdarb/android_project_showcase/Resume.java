@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.view.View;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 public class Resume extends AppCompatActivity {
@@ -13,6 +14,8 @@ public class Resume extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resume);
         WebView myWebView = (WebView) findViewById(R.id.webview);
+        WebViewClient myWebViewClient = new WebViewClient();
+        myWebView.setWebViewClient(myWebViewClient);
         TextView noLink = (TextView) findViewById(R.id.no_link);
 
 
@@ -20,7 +23,7 @@ public class Resume extends AppCompatActivity {
         String pdfLink = "";
         if(args != null){
             pdfLink = args.getString("link");
-            myWebView.loadUrl("http://www.google.com");
+            myWebView.loadUrl(pdfLink);
         }
         else{
             myWebView.setVisibility(View.GONE);
