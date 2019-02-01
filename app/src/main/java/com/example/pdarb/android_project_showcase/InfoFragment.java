@@ -87,9 +87,11 @@ public class InfoFragment extends Fragment {
         for(int i = 0; i<contacts.size();i++) {
             contactnames.add(contacts.get(i).email);
         }
-        Log.d("contactsmap",""+contactnames);
         contactsAdapter = new ContactsAdapter(contacts);
         contactsRecyclerView.setAdapter(contactsAdapter);
+
+        getActivity().setTitle("Project Info");
+
 
 
         return v;

@@ -105,9 +105,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
-                else{
-                    Log.d("password", text.getText().toString());
-                }
             }
         });
     }

@@ -110,7 +110,6 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             public void onValueChanged(int value) {
                 projectType = value;
                 projectAdapter.filter();
-                Log.d("MSTB", ""+value);
             }
         });
 
@@ -136,7 +135,6 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(((ViewGroup)(getView().getParent())).getId(), filterFragment);
                 transaction.addToBackStack(null);
-                Log.d("Filter Page", "CALLING NEW FRAGMENT");
                 transaction.commit();
 
                 return true;
@@ -276,9 +274,6 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         private ArrayList<FirebaseProject> names;
         public ProjectAdapter(ArrayList<FirebaseProject> dataset){
             names = FirebaseApplication.getProjects();
-            for(FirebaseProject a: names){
-                Log.d("filter", "majors: "+a.getMajors());
-            }
         }
 
         @Override

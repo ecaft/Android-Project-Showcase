@@ -103,7 +103,7 @@ public class FilterFragment extends Fragment {
         adapter = new FilterAdapter(getContext(),labels,opts);
         expandableListView.setAdapter(adapter);
 
-
+        getActivity().setTitle("Filter Projects");
 
         return v;
     }

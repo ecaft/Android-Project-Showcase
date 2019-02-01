@@ -76,17 +76,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int id = item.getItemId();
         if(id==R.id.navigation_home) {
             //mTextMessage.setText(R.string.title_home);
-            Log.d("navigation", "home");
             fragment = homeFragment;
         }
         else if(id==R.id.navigation_browse) {
             //mTextMessage.setText(R.string.title_browse);
-            Log.d("navigation", "browse");
             fragment = browseFragment;
         }
         else if(id==R.id.navigation_map){
             //mTextMessage.setText(R.string.title_map);
-            Log.d("navigation","map");
             fragment = mapFragment;
         }
 

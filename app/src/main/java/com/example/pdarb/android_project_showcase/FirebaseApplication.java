@@ -34,7 +34,6 @@ public class FirebaseApplication extends Application {
         super.onCreate();
         // Get database/storage reference and initialize everything
 
-        Log.d("firebase", "entered Application onCreate");
 
         projects = new ArrayList<>();
         members = new HashMap<String, ArrayList<String>>();
@@ -48,7 +47,6 @@ public class FirebaseApplication extends Application {
                 FirebaseProject p = dataSnapshot.getValue(FirebaseProject.class);
                 members.put(p.teamName, new ArrayList<String>());
                 projects.add(p);
-                Log.d("firebase", "adding children"+projects);
 
             }
 
@@ -99,7 +97,6 @@ public class FirebaseApplication extends Application {
                 }
                 list.add(c);
                 contacts.put(c.teamName,list);
-                Log.d("firebase", "adding contacts"+projects);
 
             }
 
