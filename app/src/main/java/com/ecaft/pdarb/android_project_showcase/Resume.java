@@ -1,4 +1,4 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

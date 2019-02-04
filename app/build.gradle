@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.pdarb.android_project_showcase"
+        applicationId "com.ecaft.pdarb.android_project_showcase"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1

@@ -1,4 +1,4 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 import android.app.Application;
 import android.util.Log;
@@ -6,10 +6,8 @@ import android.util.Log;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -91,6 +89,7 @@ public class FirebaseApplication extends Application {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 FirebaseContacts c = dataSnapshot.getValue(FirebaseContacts.class);
+                Log.d("contact",c.contactName);
                 ArrayList<FirebaseContacts> list = contacts.get(c.teamName);
                 if(list == null) {
                     list = new ArrayList<FirebaseContacts>();

@@ -1,4 +1,4 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 public class FirebaseContacts {
     public String contactName;

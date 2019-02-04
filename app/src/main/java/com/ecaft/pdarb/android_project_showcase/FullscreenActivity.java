@@ -1,4 +1,4 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private EditText text;
     private Button submit;
 
-    private String password = "ECaFT";
+    private String password = "ecaft2019";
 
 
     /**

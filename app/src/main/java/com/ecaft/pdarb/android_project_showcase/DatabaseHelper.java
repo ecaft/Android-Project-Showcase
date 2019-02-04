@@ -1,4 +1,4 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

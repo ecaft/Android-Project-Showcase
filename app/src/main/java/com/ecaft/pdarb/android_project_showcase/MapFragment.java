@@ -1,16 +1,12 @@
-package com.example.pdarb.android_project_showcase;
+package com.ecaft.pdarb.android_project_showcase;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -47,7 +43,7 @@ public class MapFragment extends Fragment {
 
 
         map = (SubsamplingScaleImageView) v.findViewById(R.id.map);
-        map.setImage(ImageSource.resource(R.drawable.fall_map));
+        map.setImage(ImageSource.resource(R.drawable.updated_map));
 
         getActivity().setTitle("Map");
 

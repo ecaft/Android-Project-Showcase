@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:227322925568:android:eb7ead9638499955",
         "android_client_info": {
-          "package_name": "com.example.pdarb.android_project_showcase"
+          "package_name": "com.ecaft.pdarb.android_project_showcase"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "227322925568-go064go85cagmkpcoupnm2ml4a7o0enm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.pdarb.android_project_showcase",
+            "package_name": "com.ecaft.pdarb.android_project_showcase",
             "certificate_hash": "8ec5ee77cf6fa2113ab3d49a6367dd29d8412dd7"
           }
         },

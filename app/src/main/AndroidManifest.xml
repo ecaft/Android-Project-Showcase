@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pdarb.android_project_showcase">
+    package="com.ecaft.pdarb.android_project_showcase">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.pdarb.android_project_showcase.FirebaseApplication"
+        android:name=".FirebaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.pdarb.android_project_showcase.MainActivity">
+            android:name=".MainActivity">
         </activity>
         <activity
-            android:name="com.example.pdarb.android_project_showcase.FullscreenActivity"
+            android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.pdarb.android_project_showcase.Resume"></activity>
+        <activity android:name=".Resume"></activity>
     </application>
 
 </manifest>
