@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Resume">
+    tools:context="com.example.pdarb.android_project_showcase.Resume">
 
     <WebView
         android:id="@+id/webview"
@@ -13,9 +13,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="@string/no_link"
         android:visibility="gone"
+        android:textSize="23sp"
         android:id="@+id/no_link"/>
 
 </android.support.constraint.ConstraintLayout>

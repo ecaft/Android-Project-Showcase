@@ -308,8 +308,8 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
             ArrayList<FirebaseProject> temp = new ArrayList<FirebaseProject>(projects);
             for(int i=0; i<temp.size(); i++){
                 FirebaseProject a = temp.get(i);
-                if((projectType==1 && a.teamType.equals("M.Eng"))
-                        ||(projectType==2 && a.teamType.equals("Undergrad Project Team"))){
+                if((projectType==1 && a.teamType.equals("MEng"))
+                        ||(projectType==2 && a.teamType.equals("Undergrad"))){
                     temp.remove(a);
                     i--;
                 }

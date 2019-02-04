@@ -16,14 +16,14 @@ public class Resume extends AppCompatActivity {
         WebView myWebView = (WebView) findViewById(R.id.webview);
         WebViewClient myWebViewClient = new WebViewClient();
         myWebView.setWebViewClient(myWebViewClient);
+        myWebView.getSettings().setDomStorageEnabled(true);
+        myWebView.getSettings().setJavaScriptEnabled(true);
         TextView noLink = (TextView) findViewById(R.id.no_link);
 
 
         Bundle args = getIntent().getExtras();
-        String pdfLink = "";
-        if(args != null){
-            pdfLink = args.getString("link");
-            myWebView.loadUrl(pdfLink);
+        if(args != null && !args.getString("link").equals("")){
+            myWebView.loadUrl(args.getString("link"));
         }
         else{
             myWebView.setVisibility(View.GONE);
