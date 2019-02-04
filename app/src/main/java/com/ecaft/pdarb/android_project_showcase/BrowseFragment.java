@@ -214,7 +214,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
     private class ProjectHolder extends RecyclerView.ViewHolder{
         public LinearLayout relLayout;
         public TextView name;
-        public TextView description;
+        public TextView table;
         public ImageButton star;
         public int index;
         public FirebaseProject project;
@@ -232,6 +232,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                     bundle.putString(FirebaseApplication.PROJECT_TYPE, project.teamType);
                     bundle.putString(FirebaseApplication.PROJECT_INFO, project.descrip);
                     bundle.putString(FirebaseApplication.PROJECT_RESUME, project.resumeBook);
+                    bundle.putString(FirebaseApplication.PROJECT_TABLE, project.table);
 
                     info.setArguments(bundle);
 
@@ -241,7 +242,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
                     transaction.commit();
                 }
             });
-            description = (TextView) v.findViewById(R.id.project_description);
+            table = (TextView) v.findViewById(R.id.project_description);
             star = (ImageButton) v.findViewById(R.id.save_project);
             star.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,7 +280,7 @@ public class BrowseFragment extends Fragment implements FilterFragment.OnFragmen
         public void onBindViewHolder(ProjectHolder p, int position){
             p.project = names.get(position);
             p.name.setText(names.get(position).teamName);
-            p.description.setText(names.get(position).descrip);
+            p.table.setText("Table "+ names.get(position).table);
             p.star.setBackgroundDrawable(null);
             p.index=position;
             if(MainActivity.isInFavorites(names.get(position).teamName)){

@@ -21,6 +21,7 @@ public class InfoFragment extends Fragment {
     private TextView ProjectName;
     private TextView ProjectDesc;
     private TextView ContactsHeader;
+    private TextView tableView;
     //private ImageButton star;
     private static ArrayList<FirebaseContacts> contacts;
     private static ArrayList<FirebaseProject> projects;
@@ -33,6 +34,7 @@ public class InfoFragment extends Fragment {
     private String desc;
     private String type;
     private String resumelink;
+    private String table;
 
     private Button resume;
 
@@ -49,6 +51,7 @@ public class InfoFragment extends Fragment {
         desc = args.getString(FirebaseApplication.PROJECT_INFO);
         type = args.getString(FirebaseApplication.PROJECT_TYPE);
         resumelink = args.getString(FirebaseApplication.PROJECT_RESUME);
+        table = args.getString(FirebaseApplication.PROJECT_TABLE);
         setHasOptionsMenu(true);
 
         ProjectName = (TextView) v.findViewById(R.id.project_details_name);
@@ -56,6 +59,9 @@ public class InfoFragment extends Fragment {
 
         ProjectDesc = (TextView) v.findViewById(R.id.project_details_information);
         ProjectDesc.setText(desc);
+
+        tableView = (TextView) v.findViewById(R.id.project_table);
+        tableView.setText("Table "+table);
 
         resume = (Button) v.findViewById(R.id.resume);
         resume.setOnClickListener(new View.OnClickListener(){

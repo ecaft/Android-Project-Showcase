@@ -26,6 +26,18 @@
              tools:text="Project Name"/>
 
         <TextView
+            android:id="@+id/project_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="Table"/>
+
+        <TextView
             android:id="@+id/project_details_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,6 +48,18 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:text="Project Information"/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/project_table"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18sp"-->
+            <!--tools:text="Table"/>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvContacts"

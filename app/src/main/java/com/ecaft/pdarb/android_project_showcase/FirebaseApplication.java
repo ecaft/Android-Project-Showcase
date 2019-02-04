@@ -19,6 +19,7 @@ public class FirebaseApplication extends Application {
     public static final String PROJECT_INFO = "description";
     public static final String PROJECT_TYPE = "type";
     public static final String PROJECT_RESUME = "resume";
+    public static final String PROJECT_TABLE = "table";
 
     private static DatabaseReference databaseReference;
     private static FirebaseStorage storage;
